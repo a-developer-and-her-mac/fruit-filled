@@ -29,21 +29,23 @@ let fruitRepository = (function () {
 
   //Shows more details about the selected fruit
   function showDetails(fruit) {
-    console.log(fruit);
+    loadDetails(fruit).then(() => console.log(fruit));
   }
 
   function loadList() {
     return fetch(apiUrl).then((response) => {
       return response.json();
     }).then((json) => {
-      json.results.forEach((item) => {
+      console.log(json);
+      json.forEach((item) => {
         let fruit = {
           name: item.name,
           nutritionsUrl: item.nutritions
         };
-      }).catch((error) => {
-        console.log(error);
+        add(fruit);
       })
+    }).catch((error) => {
+      console.log(error);
     })
   }
 
@@ -51,7 +53,7 @@ let fruitRepository = (function () {
     let url = item.nutritions;
     return fetch(url).then((reponse) => {
       return reponse.json();
-    }).then((details) => {
+    }).then((json) => {
       item.sugar = details.sugar;
       item.calories = details.calories;
     }).catch((error) => {
@@ -71,5 +73,5 @@ let fruitRepository = (function () {
 fruitRepository.loadList().then(() => {
   fruitRepository.getAll().forEach((fruit) => {
     fruitRepository.addListItem(fruit);
-  })
-})
+  });
+});
