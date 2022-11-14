@@ -29,7 +29,8 @@ let fruitRepository = (function () {
 
   //Shows more details about the selected fruit
   function showDetails(fruit) {
-    loadDetails(fruit).then(() => console.log(fruit));
+    loadDetails(fruit);
+    console.log(fruit);
   }
 
   function loadList() {
@@ -50,15 +51,9 @@ let fruitRepository = (function () {
   }
 
   function loadDetails(item) {
-    let url = item.nutritions;
-    return fetch(url).then((reponse) => {
-      return reponse.json();
-    }).then((json) => {
-      item.sugar = details.sugar;
-      item.calories = details.calories;
-    }).catch((error) => {
-      console.log(error);
-    })
+    let url = item.nutritionsUrl;
+    item.sugar = url.sugar;
+    item.calories = url.calories;
   }
 
   return {
