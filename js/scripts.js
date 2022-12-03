@@ -24,12 +24,14 @@ let fruitRepository = (function () {
     fruitRecord.appendChild(listItem);
     button.addEventListener('click', function (event) {
       showDetails(fruit);
+      showModal(fruit);
     });
   }
 
   //Shows more details about the selected fruit
   function showDetails(fruit) {
     loadDetails(fruit);
+    showModal(fruit);
     console.log(fruit);
   }
 
@@ -56,7 +58,7 @@ let fruitRepository = (function () {
     item.calories = url.calories;
   }
 
-  function showModal(title, text) {
+  function showModal(fruit) {
     let modalContainer = document.querySelector('#modal-container');
     modalContainer.innerHTML = '';
     let modal = document.createElement('div');
@@ -68,10 +70,10 @@ let fruitRepository = (function () {
     closeButtonElement.addEventListener('click', hideModal);
 
     let titleElement = document.createElement('h1');
-    titleElement.innerText = title;
+    titleElement.innerText = fruit.name;
 
     let contentElement = document.createElement('p');
-    contentElement.innerText = text;
+    contentElement.innerText = fruit.calories + ' calories';
 
     modal.appendChild(closeButtonElement);
     modal.appendChild(titleElement);
@@ -87,10 +89,6 @@ let fruitRepository = (function () {
       }
     });
   }
-
-  document.querySelector('#show-modal').addEventListener('click', () => {
-    showModal('Modal title', 'This is the modal content!');
-  });
 
   var dialogPromiseReject;
 
